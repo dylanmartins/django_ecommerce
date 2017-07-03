@@ -1,7 +1,9 @@
-# conding=utf-8
+# coding=utf-8
 
 from django.shortcuts import render
 from django.http import HttpResponse
+
+from .forms import ContactForm
 
 
 # Create your views here.
@@ -10,4 +12,11 @@ def index(request):
 
 
 def contact(request):
-    return render(request, 'contact.html')
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+    else:
+        form = ContactForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'contact.html', context)
